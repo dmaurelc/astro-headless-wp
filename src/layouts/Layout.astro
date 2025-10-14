@@ -25,20 +25,30 @@ const { title = "Propiedades Inmobiliarias" } = Astro.props;
 			// Script para evitar el flash de contenido sin estilo (FOUC) en el tema
 			(function() {
 				function getTheme() {
-					if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-						return localStorage.getItem('theme');
-					}
-					if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-						return 'dark';
+					try {
+						if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+							return localStorage.getItem('theme');
+						}
+						if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+							return 'dark';
+						}
+					} catch (e) {
+						console.debug('Error detecting theme:', e);
 					}
 					return 'light';
 				}
 
 				function applyTheme(theme) {
-					if (theme === 'light') {
-						document.documentElement.classList.remove('dark');
-					} else {
-						document.documentElement.classList.add('dark');
+					try {
+						if (theme === 'light') {
+							document.documentElement.classList.remove('dark');
+							document.documentElement.setAttribute('data-theme', 'light');
+						} else {
+							document.documentElement.classList.add('dark');
+							document.documentElement.setAttribute('data-theme', 'dark');
+						}
+					} catch (e) {
+						console.debug('Error applying theme:', e);
 					}
 				}
 

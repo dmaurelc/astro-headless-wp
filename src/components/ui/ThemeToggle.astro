@@ -1,20 +1,22 @@
 ---
-// Componente Toggle para Dark Mode
+// Generar ID único para evitar conflictos entre instancias
+const toggleId = `theme-toggle-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <button
-  id="theme-toggle"
-  class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-foreground"
-  aria-label="Toggle theme"
+  id={toggleId}
+  class="theme-toggle-btn inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-border bg-background hover:bg-muted hover:text-foreground h-10 w-10 text-foreground"
+  aria-label="Cambiar tema"
+  type="button"
 >
   <!-- Icono de Sol (Light Mode) -->
   <svg
-    id="sun-icon"
-    class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-foreground"
+    class="sun-icon h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
     stroke-width="2"
+    aria-hidden="true"
   >
     <circle cx="12" cy="12" r="5"></circle>
     <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
@@ -22,60 +24,97 @@
   
   <!-- Icono de Luna (Dark Mode) -->
   <svg
-    id="moon-icon"
-    class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-foreground"
+    class="moon-icon absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
     stroke-width="2"
+    aria-hidden="true"
   >
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
   </svg>
 </button>
 
-<script>
-  // Función para obtener el tema actual
-  function getTheme() {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-      return localStorage.getItem('theme');
-    }
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  }
-
-  // Función para aplicar el tema
-  function applyTheme(theme) {
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  }
-
-  // Función para cambiar el tema
-  function toggleTheme() {
-    const currentTheme = getTheme();
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+<script is:inline define:vars={{toggleId}}>
+  // Funciones globales del theme (solo se definen una vez)
+  if (!window.themeManager) {
+    window.themeManager = {
+      getTheme: function() {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      },
+      
+      applyTheme: function(theme) {
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        
+        // Actualizar aria-label de todos los botones de theme
+        const themeButtons = document.querySelectorAll('.theme-toggle-btn');
+        themeButtons.forEach(btn => {
+          btn.setAttribute('aria-label', theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
+        });
+        
+        // Disparar evento personalizado
+        window.dispatchEvent(new CustomEvent('themeChange', { detail: { theme } }));
+      },
+      
+      toggleTheme: function() {
+        const currentTheme = this.getTheme();
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('theme', newTheme);
+        }
+        this.applyTheme(newTheme);
+      },
+      
+      init: function() {
+        const theme = this.getTheme();
+        this.applyTheme(theme);
+        
+        // Escuchar cambios en las preferencias del sistema
+        if (window.matchMedia) {
+          const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+          mediaQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+              this.applyTheme(e.matches ? 'dark' : 'light');
+            }
+          });
+        }
+      }
+    };
     
-    localStorage.setItem('theme', newTheme);
-    applyTheme(newTheme);
+    // Inicializar inmediatamente para evitar flash
+    window.themeManager.init();
   }
-
-  // Inicializar el tema al cargar la página
-  document.addEventListener('DOMContentLoaded', () => {
-    const theme = getTheme();
-    applyTheme(theme);
-    
-    // Agregar event listener al botón
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', toggleTheme);
+  
+  // Agregar event listener específico para este botón
+  document.addEventListener('DOMContentLoaded', function() {
+    const button = document.getElementById(toggleId);
+    if (button) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.themeManager.toggleTheme();
+      });
+      
+      // Agregar eventos táctiles para móviles
+      button.addEventListener('touchstart', function(e) {
+        button.style.transform = 'scale(0.95)';
+      }, { passive: true });
+      
+      button.addEventListener('touchend', function(e) {
+        button.style.transform = 'scale(1)';
+      }, { passive: true });
     }
   });
-
-  // También aplicar el tema inmediatamente para evitar flash
-  const theme = getTheme();
-  applyTheme(theme);
 </script>
