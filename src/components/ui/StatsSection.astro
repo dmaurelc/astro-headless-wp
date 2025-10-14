@@ -1,0 +1,99 @@
+---
+interface Stat {
+  number: string;
+  label: string;
+  description?: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  stats?: Stat[];
+}
+
+const {
+  title = "Resultados que hablan por sí solos",
+  subtitle = "Más de una década construyendo confianza",
+  stats = [
+    {
+      number: "500+",
+      label: "Propiedades vendidas",
+      description: "Familias satisfechas con su nuevo hogar"
+    },
+    {
+      number: "98%",
+      label: "Clientes satisfechos",
+      description: "Valoración promedio en nuestros servicios"
+    },
+    {
+      number: "10+",
+      label: "Años de experiencia",
+      description: "Liderando el mercado inmobiliario"
+    },
+    {
+      number: "24h",
+      label: "Tiempo de respuesta",
+      description: "Atención rápida y personalizada"
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="py-16 sm:py-24 bg-muted/30">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mx-auto max-w-2xl text-center mb-16">
+      <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        {title}
+      </h2>
+      <p class="mt-4 text-lg leading-8 text-muted-foreground">
+        {subtitle}
+      </p>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="mx-auto max-w-5xl">
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => (
+          <div class="group text-center">
+            <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 mb-6 group-hover:bg-primary/20 transition-colors duration-300">
+              <span class="text-3xl font-bold text-primary group-hover:scale-110 transition-transform duration-300">
+                {stat.number}
+              </span>
+            </div>
+            <h3 class="text-base font-semibold text-foreground mb-2">
+              {stat.label}
+            </h3>
+            {stat.description && (
+              <p class="text-sm text-muted-foreground">
+                {stat.description}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Additional trust indicators -->
+    <div class="mt-16 flex flex-wrap items-center justify-center gap-8 opacity-60">
+      <div class="flex items-center space-x-2">
+        <svg class="h-5 w-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm text-muted-foreground">Servicio certificado</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <svg class="h-5 w-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-sm text-muted-foreground">Garantía de calidad</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <svg class="h-5 w-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="text-sm text-muted-foreground">Proceso transparente</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  primaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+  backgroundImage?: string;
+}
+
+const {
+  title = "¿Listo para encontrar tu propiedad ideal?",
+  subtitle = "Únete a más de 500 familias satisfechas",
+  description = "Nuestro equipo de expertos está aquí para ayudarte en cada paso del proceso. Desde la búsqueda hasta la firma, te acompañamos para que encuentres el hogar perfecto.",
+  primaryButtonText = "Contactar ahora",
+  primaryButtonUrl = "/contacto",
+  secondaryButtonText = "Ver propiedades",
+  secondaryButtonUrl = "/propiedades",
+  backgroundImage = "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden py-16 sm:py-24 lg:py-32">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 -z-10">
+    <img
+      src={backgroundImage}
+      alt="CTA background"
+      class="h-full w-full object-cover opacity-40"
+      loading="lazy"
+    />
+    <!-- Overlay optimizado para ambos temas -->
+    <div class="absolute inset-0 bg-primary/85 dark:bg-primary/60"></div>
+  </div>
+
+  <!-- Decorative elements -->
+  <div class="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6" aria-hidden="true">
+    <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-primary-foreground/10 to-accent/20 opacity-30"
+         style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+    </div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <!-- Badge -->
+      <div class="mb-6">
+        <span class="inline-flex items-center rounded-full bg-primary-foreground/10 px-4 py-2 text-sm font-medium text-primary-foreground ring-1 ring-inset ring-primary-foreground/20">
+          ✨ {subtitle}
+        </span>
+      </div>
+
+      <!-- Main Title -->
+      <h2 class="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl lg:text-5xl">
+        {title}
+      </h2>
+      
+      <!-- Description -->
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-primary-foreground/90">
+        {description}
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <a 
+          href={primaryButtonUrl}
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-foreground px-8 py-4 text-base font-semibold text-primary shadow-lg transition-all duration-300 hover:bg-primary-foreground/90 hover:scale-105 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground"
+        >
+          {primaryButtonText}
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+        
+        <a 
+          href={secondaryButtonUrl}
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-primary-foreground/30 bg-primary-foreground/10 backdrop-blur-sm px-8 py-4 text-base font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary-foreground/20 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground"
+        >
+          {secondaryButtonText}
+        </a>
+      </div>
+
+      <!-- Trust indicators -->
+      <div class="mt-12 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-primary-foreground/70">
+        <div class="flex items-center space-x-2">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm">Sin comisiones ocultas</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+            <path d="m18 8.118-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+          </svg>
+          <span class="text-sm">Respuesta en 24h</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm">Asesoría gratuita</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

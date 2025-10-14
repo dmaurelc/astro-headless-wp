@@ -1,0 +1,378 @@
+---
+interface Props {
+  mapa?: {
+    lat: number;
+    lng: number;
+  };
+  direccion: string;
+  title: string;
+}
+
+const { mapa, direccion, title } = Astro.props;
+---
+
+<div class="property-map">
+  <h2 class="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    </svg>
+    Ubicación
+  </h2>
+
+  <!-- Información de dirección -->
+  <div class="mb-6 p-4 bg-muted/50 rounded-lg border border-border">
+    <div class="flex items-start gap-3">
+      <div class="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mt-0.5">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-semibold text-foreground mb-1">Dirección</h3>
+        <p class="text-muted-foreground">{direccion}</p>
+      </div>
+    </div>
+  </div>
+
+  {mapa && mapa.lat && mapa.lng ? (
+    <>
+      <!-- Contenedor del mapa -->
+      <div class="map-container relative overflow-hidden rounded-xl border border-border bg-muted z-10">
+        <div 
+          id="property-map" 
+          class="w-full h-96 md:h-[450px] relative z-10" 
+          data-lat={mapa.lat} 
+          data-lng={mapa.lng} 
+          data-direccion={direccion}
+          data-title={title}
+        ></div>
+        
+        <!-- Overlay de carga -->
+        <div id="map-loading" class="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center">
+          <div class="flex items-center gap-3">
+            <div class="animate-spin w-6 h-6 border-2 border-primary border-t-transparent rounded-full"></div>
+            <span class="text-muted-foreground">Cargando mapa...</span>
+          </div>
+        </div>
+        
+        <!-- Overlay de error -->
+        <div id="map-error" class="absolute inset-0 bg-background/90 backdrop-blur-sm hidden">
+          <div class="flex flex-col items-center justify-center h-full p-8 text-center">
+            <div class="w-12 h-12 bg-destructive/10 rounded-full flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-destructive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Error al cargar el mapa</h3>
+            <p class="text-muted-foreground mb-4">No se pudo cargar la información de ubicación.</p>
+            <button 
+              id="retry-map" 
+              class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-200"
+            >
+              Intentar de nuevo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles del mapa -->
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button 
+          id="map-satellite" 
+          class="px-3 py-2 text-sm bg-muted text-muted-foreground hover:bg-muted-foreground/20 hover:text-foreground rounded-lg transition-colors duration-200"
+        >
+          Vista satelital
+        </button>
+        <button 
+          id="map-street" 
+          class="px-3 py-2 text-sm bg-primary text-primary-foreground rounded-lg"
+        >
+          Mapa de calles
+        </button>
+        <a 
+          href={`https://www.google.com/maps/dir/?api=1&destination=${mapa.lat},${mapa.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3 py-2 text-sm bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-lg transition-colors duration-200 flex items-center gap-1"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+          Abrir en Google Maps
+        </a>
+      </div>
+    </>
+  ) : (
+    <!-- Fallback sin coordenadas -->
+    <div class="h-64 bg-muted rounded-xl border border-border flex flex-col items-center justify-center p-8 text-center">
+      <div class="w-16 h-16 bg-muted-foreground/10 rounded-full flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-foreground mb-2">Ubicación no disponible</h3>
+      <p class="text-muted-foreground mb-4">La información de coordenadas no está disponible para esta propiedad.</p>
+      <a 
+        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg transition-colors duration-200 inline-flex items-center gap-2"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+        </svg>
+        Buscar en Google Maps
+      </a>
+    </div>
+  )}
+</div>
+
+{mapa && mapa.lat && mapa.lng && (
+  <>
+    <!-- Estilos de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+    
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        const mapElement = document.getElementById('property-map');
+        const loadingElement = document.getElementById('map-loading');
+        const errorElement = document.getElementById('map-error');
+        const retryButton = document.getElementById('retry-map');
+        const satelliteButton = document.getElementById('map-satellite');
+        const streetButton = document.getElementById('map-street');
+        
+        if (!mapElement) return;
+        
+        const lat = parseFloat(mapElement.getAttribute('data-lat') || '0');
+        const lng = parseFloat(mapElement.getAttribute('data-lng') || '0');
+        const direccion = mapElement.getAttribute('data-direccion') || '';
+        const title = mapElement.getAttribute('data-title') || '';
+        
+        let map = null;
+        let streetLayer = null;
+        let satelliteLayer = null;
+        let currentLayer = null;
+        
+        function showError() {
+          if (loadingElement) loadingElement.style.display = 'none';
+          if (errorElement) errorElement.style.display = 'block';
+        }
+        
+        function hideLoading() {
+          if (loadingElement) loadingElement.style.display = 'none';
+        }
+        
+        function initializeMap() {
+          try {
+            if (typeof L === 'undefined') {
+              showError();
+              return;
+            }
+            
+            // Crear el mapa
+            map = L.map('property-map', {
+              zoomControl: true,
+              scrollWheelZoom: true,
+              doubleClickZoom: true,
+              dragging: true
+            }).setView([lat, lng], 15);
+            
+            // Definir capas
+            streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              maxZoom: 19
+            });
+            
+            satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+              attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
+              maxZoom: 19
+            });
+            
+            // Agregar capa por defecto
+            currentLayer = streetLayer;
+            streetLayer.addTo(map);
+            
+            // Crear marcador personalizado
+            const customIcon = L.divIcon({
+              html: `
+                <div class="custom-marker">
+                  <div class="marker-pin"></div>
+                  <div class="marker-pulse"></div>
+                </div>
+              `,
+              className: 'custom-marker-container',
+              iconSize: [40, 40],
+              iconAnchor: [20, 35]
+            });
+            
+            // Agregar marcador
+            L.marker([lat, lng], { icon: customIcon })
+              .addTo(map)
+              .bindPopup(`
+                <div class="custom-popup">
+                  <h3 style="margin: 0 0 8px 0; font-weight: 600; color: #1f2937;">${title}</h3>
+                  <p style="margin: 0; color: #6b7280; font-size: 14px;">${direccion}</p>
+                </div>
+              `)
+              .openPopup();
+            
+            hideLoading();
+            
+            // Event listeners para controles
+            if (satelliteButton && streetButton) {
+              satelliteButton.addEventListener('click', function() {
+                if (currentLayer === streetLayer) {
+                  map.removeLayer(streetLayer);
+                  map.addLayer(satelliteLayer);
+                  currentLayer = satelliteLayer;
+                  satelliteButton.classList.add('bg-primary', 'text-primary-foreground');
+                  satelliteButton.classList.remove('bg-muted', 'text-muted-foreground', 'hover:bg-muted-foreground/20', 'hover:text-foreground');
+                  streetButton.classList.remove('bg-primary', 'text-primary-foreground');
+                  streetButton.classList.add('bg-muted', 'text-muted-foreground', 'hover:bg-muted-foreground/20', 'hover:text-foreground');
+                }
+              });
+              
+              streetButton.addEventListener('click', function() {
+                if (currentLayer === satelliteLayer) {
+                  map.removeLayer(satelliteLayer);
+                  map.addLayer(streetLayer);
+                  currentLayer = streetLayer;
+                  streetButton.classList.add('bg-primary', 'text-primary-foreground');
+                  streetButton.classList.remove('bg-muted', 'text-muted-foreground', 'hover:bg-muted-foreground/20', 'hover:text-foreground');
+                  satelliteButton.classList.remove('bg-primary', 'text-primary-foreground');
+                  satelliteButton.classList.add('bg-muted', 'text-muted-foreground', 'hover:bg-muted-foreground/20', 'hover:text-foreground');
+                }
+              });
+            }
+            
+          } catch (error) {
+            console.error('Error initializing map:', error);
+            showError();
+          }
+        }
+        
+        // Inicializar mapa
+        if (typeof L !== 'undefined') {
+          initializeMap();
+        } else {
+          // Esperar a que Leaflet se cargue
+          let attempts = 0;
+          const checkLeaflet = setInterval(() => {
+            if (typeof L !== 'undefined') {
+              clearInterval(checkLeaflet);
+              initializeMap();
+            } else if (attempts > 50) { // 5 segundos máximo
+              clearInterval(checkLeaflet);
+              showError();
+            }
+            attempts++;
+          }, 100);
+        }
+        
+        // Botón de reintentar
+        if (retryButton) {
+          retryButton.addEventListener('click', function() {
+            if (errorElement) errorElement.style.display = 'none';
+            if (loadingElement) loadingElement.style.display = 'block';
+            initializeMap();
+          });
+        }
+      });
+    </script>
+    
+    <style is:inline>
+      /* Asegurar que el mapa no tenga z-index mayor al header */
+      .leaflet-container {
+        z-index: 1 !important;
+      }
+      
+      .leaflet-control-container {
+        z-index: 10 !important;
+      }
+      
+      .leaflet-popup {
+        z-index: 20 !important;
+      }
+      
+      .custom-marker-container {
+        background: transparent !important;
+        border: none !important;
+        z-index: 1000 !important;
+      }
+      
+      .custom-marker {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        z-index: 1000;
+      }
+      
+      .marker-pin {
+        width: 30px;
+        height: 30px;
+        border-radius: 50% 50% 50% 0;
+        background: var(--accent);
+        position: absolute;
+        transform: rotate(-45deg);
+        left: 50%;
+        top: 50%;
+        margin: -15px 0 0 -15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 1000;
+      }
+      
+      .marker-pin:after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        margin: 9px 0 0 9px;
+        background: var(--primary);
+        position: absolute;
+        border-radius: 50%;
+        z-index: 1001;
+      }
+      
+      .marker-pulse {
+        background: hsl(var(--primary) / 0.4);
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -25px 0 0 -25px;
+        transform: rotateX(55deg);
+        animation: pulsate 2s ease-out infinite;
+        z-index: 999;
+      }
+      
+      @keyframes pulsate {
+        0% {
+          transform: rotateX(55deg) scale(0.6);
+          opacity: 1;
+        }
+        100% {
+          transform: rotateX(55deg) scale(1.4);
+          opacity: 0;
+        }
+      }
+      
+      .custom-popup {
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      
+      .leaflet-popup-content-wrapper {
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
+      
+      .leaflet-popup-tip {
+        background: white;
+        box-shadow: 0 3px 14px rgba(0,0,0,0.1);
+      }
+    </style>
+  </>
+)}

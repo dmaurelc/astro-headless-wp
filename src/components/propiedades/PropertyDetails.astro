@@ -1,0 +1,127 @@
+---
+interface Props {
+  title: string;
+  direccion: string;
+  precio: number;
+  tipo: string[];
+  operacion: string[];
+  descripcion: string;
+}
+
+const { title, direccion, precio, tipo, operacion, descripcion } = Astro.props;
+
+// Función para formatear precio (importada desde services)
+import { formatearPrecio } from "../../services/propiedades";
+---
+
+<div class="property-details">
+  <!-- Tags de tipo y operación -->
+  <div class="flex flex-wrap gap-2 mb-4">
+    {tipo.map((t) => (
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary text-primary-foreground">
+        {t}
+      </span>
+    ))}
+    {operacion.map((o) => (
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
+        {o}
+      </span>
+    ))}
+  </div>
+
+  <!-- Título principal -->
+  <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+    {title}
+  </h1>
+
+  <!-- Dirección con icono -->
+  <div class="flex items-start gap-2 mb-4 text-muted-foreground">
+    <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    </svg>
+    <p class="text-lg leading-relaxed">{direccion}</p>
+  </div>
+
+  <!-- Precio destacado -->
+  <div class="price-container mb-6 p-6 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl border border-primary/20">
+    <div class="flex items-center gap-2 mb-1">
+      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+      </svg>
+      <span class="text-sm font-medium text-muted-foreground uppercase tracking-wide">Precio</span>
+    </div>
+    <p class="text-3xl md:text-4xl font-bold text-primary">
+      {formatearPrecio(precio)}
+    </p>
+  </div>
+
+  <!-- Descripción -->
+  <div class="description-container">
+    <h2 class="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+      <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      Descripción
+    </h2>
+    <div 
+      class="prose prose-lg max-w-none text-muted-foreground leading-relaxed"
+      set:html={descripcion}
+    />
+  </div>
+</div>
+
+<style>
+  /* Estilos para el contenido HTML de la descripción */
+  .description-container :global(p) {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+  }
+  
+  .description-container :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  
+  .description-container :global(strong) {
+    color: hsl(var(--foreground));
+    font-weight: 600;
+  }
+  
+  .description-container :global(em) {
+    color: hsl(var(--foreground) / 0.8);
+    font-style: italic;
+  }
+  
+  .description-container :global(ul, ol) {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .description-container :global(li) {
+    margin-bottom: 0.5rem;
+  }
+  
+  .description-container :global(ul li) {
+    list-style-type: disc;
+  }
+  
+  .description-container :global(ol li) {
+    list-style-type: decimal;
+  }
+  
+  .description-container :global(h3) {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .description-container :global(h4) {
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+</style>

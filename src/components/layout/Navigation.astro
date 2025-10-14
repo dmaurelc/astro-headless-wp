@@ -1,0 +1,49 @@
+---
+// Obtener la URL actual para determinar qué enlace está activo
+const currentPath = Astro.url.pathname;
+
+// Definir los elementos de navegación
+const navItems = [
+  { href: "/", label: "Inicio" },
+  { href: "/propiedades", label: "Propiedades" },
+  { href: "/empresa", label: "Empresa" },
+  { href: "/contacto", label: "Contacto" }
+];
+
+// Función para determinar si un enlace está activo
+const isActive = (href: string) => {
+  if (href === "/" && currentPath === "/") return true;
+  if (href !== "/" && currentPath.startsWith(href)) return true;
+  return false;
+};
+---
+
+<nav>
+  <ul class="flex flex-col lg:flex-row gap-1 lg:gap-6 list-none m-0 p-0 uppercase text-sm">
+    {navItems.map((item) => (
+      <li class="w-full lg:w-auto">
+        <a
+          href={item.href}
+          class={`no-underline font-medium transition-all duration-300 relative group block py-3 lg:py-1 px-2 lg:px-0 rounded-lg lg:rounded-none hover:bg-muted/50 lg:hover:bg-transparent ${
+            isActive(item.href)
+              ? "text-primary bg-primary/10 lg:bg-transparent"
+              : "text-foreground hover:text-primary"
+          }`}
+          aria-current={isActive(item.href) ? "page" : undefined}
+        >
+          {item.label}
+          
+          <!-- Indicador visual para página activa (solo en desktop) -->
+          <span 
+            class={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 hidden lg:block ${
+              isActive(item.href) 
+                ? "w-full" 
+                : "w-0 group-hover:w-full"
+            }`}
+            aria-hidden="true"
+          ></span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

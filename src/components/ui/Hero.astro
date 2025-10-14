@@ -1,0 +1,72 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  primaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+  backgroundImage?: string;
+}
+
+const {
+  title = "Encuentra la propiedad perfecta para ti",
+  subtitle = "Descubre nuestra selección de propiedades en las mejores ubicaciones",
+  primaryButtonText = "Ver propiedades",
+  primaryButtonUrl = "/propiedades",
+  secondaryButtonText = "Contáctanos",
+  secondaryButtonUrl = "/contacto",
+  backgroundImage = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&q=80"
+} = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden bg-background py-24 lg:py-32">
+  <!-- Background Image -->
+  <img
+    src={backgroundImage}
+    alt="Hero background"
+    class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+    loading="eager"
+  />
+  
+  <!-- Gradient Overlays -->
+  <div class="absolute inset-0 -z-10 bg-gradient-to-br from-background/80 via-background/50 to-background/30 dark:from-background/90 dark:via-background/70 dark:to-background/40"></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-background/60 via-transparent to-transparent"></div>
+  
+  <!-- Content Container -->
+  <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-3xl text-center">
+      <!-- Main Heading -->
+      <h1 class="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+        <span class="block">{title}</span>
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="mt-6 text-lg leading-8 text-muted-foreground sm:text-xl lg:text-2xl">
+        {subtitle}
+      </p>
+      
+      <!-- Action Buttons -->
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <a 
+          href={primaryButtonUrl}
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-semibold transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transform hover:scale-105 h-12 px-8 py-3 has-[>svg]:px-6"
+        >
+          {primaryButtonText}
+        </a>
+        <a 
+          href={secondaryButtonUrl}
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-base font-semibold transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-card/80 text-card-foreground border border-border/50 hover:bg-card/90 backdrop-blur-sm shadow-md hover:shadow-lg transform hover:scale-105 h-12 px-8 py-3 has-[>svg]:px-6"
+        >
+          {secondaryButtonText}
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Decorative Elements -->
+  <div class="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6" aria-hidden="true">
+    <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-primary/20 to-accent/20 opacity-30"
+         style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+  </div>
+</section>

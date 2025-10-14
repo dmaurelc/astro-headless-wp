@@ -1,11 +1,50 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import HeroFour from "../components/ui/HeroFour.astro";
+import StatsSection from "../components/ui/StatsSection.astro";
+import PropiedadesDestacadas from "../components/propiedades/PropiedadesDestacadas.astro";
+import WhyChooseUs from "../components/ui/WhyChooseUs.astro";
+import ProcessSteps from "../components/ui/ProcessSteps.astro";
+import Testimonials from "../components/ui/Testimonials.astro";
+import CtaOne from "../components/ui/CtaOne.astro";
+import { obtenerPropiedades } from "../services/propiedades";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Obtener las propiedades desde la API
+const propiedades = await obtenerPropiedades();
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Propiedades Inmobiliarias | Encuentra tu hogar ideal">
+	<!-- Hero Principal -->
+	<HeroFour />
+	
+	<!-- Propiedades Destacadas -->
+	<section class="py-16 bg-background">
+		<div class="mx-auto max-w-7xl px-4">
+			<PropiedadesDestacadas propiedades={propiedades} />
+		</div>
+	</section>
+
+	<!-- Estadísticas -->
+	<StatsSection />
+
+
+	<!-- ¿Por qué elegirnos? -->
+	<WhyChooseUs />
+
+	<!-- Proceso de trabajo -->
+	<ProcessSteps />
+
+	<!-- Testimonios -->
+	<Testimonials />
+
+	<!-- Call to Action final -->
+	<CtaOne 
+		title="¿Listo para encontrar tu propiedad ideal?"
+		subtitle="Miles de familias ya confiaron en nosotros"
+		description="Nuestro equipo de expertos te está esperando para ayudarte a dar el siguiente paso hacia el hogar de tus sueños."
+		primaryButtonText="Ver todas las propiedades"
+		primaryButtonUrl="/propiedades"
+		secondaryButtonText="Contactar ahora"
+		secondaryButtonUrl="/contacto"
+	/>
 </Layout>

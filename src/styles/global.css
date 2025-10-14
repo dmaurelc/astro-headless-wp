@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@import "./theme/theme.css";
+
+:root {
+  --outfit: Outfit, sans-serif;
+}
+
+body {
+  letter-spacing: var(--tracking-normal);
+  background-color: var(--background); 
+  color: hsl(var(--color-foreground));
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--outfit);
+}
+
+@layer components {
+  .contenedor {
+    @apply max-w-7xl mx-auto;
+  }
+  
+  .clickable-card a::before {
+		@apply absolute inset-0 z-10;
+		content: "";
+	}
+}

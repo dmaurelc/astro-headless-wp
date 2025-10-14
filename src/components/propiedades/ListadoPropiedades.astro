@@ -1,0 +1,29 @@
+---
+import type { Propiedad } from "../../types/propiedad";
+import CardPropiedad from "./CardPropiedad.astro";
+
+interface Props {
+  propiedades: Propiedad[];
+  titulo?: string;
+}
+
+const { propiedades, titulo } = Astro.props;
+---
+
+<section class="my-10">
+  {titulo && <h2 class="text-3xl font-bold mb-6 text-center text-foreground">{titulo}</h2>}
+
+  {
+    propiedades.length === 0 ? (
+      <div class="text-center py-10 bg-card rounded-lg border shadow-sm">
+        <p class="text-lg text-muted-foreground">No se encontraron propiedades</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {propiedades.map((propiedad) => (
+          <CardPropiedad propiedad={propiedad} />
+        ))}
+      </div>
+    )
+  }
+</section>

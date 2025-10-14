@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ListadoPropiedades from "../components/propiedades/ListadoPropiedades.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+import { obtenerPropiedades } from "../services/propiedades";
+
+// Obtener las propiedades desde la API
+const propiedades = await obtenerPropiedades();
+---
+
+<Layout title="Todas las Propiedades | Propiedades Inmobiliarias">
+  <PageHeader 
+    title="Todas las Propiedades"
+    subtitle="Catálogo completo"
+    description="Explora nuestra selección completa de propiedades disponibles en las mejores ubicaciones de Chile"
+    backgroundImage="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+    breadcrumb={[
+      { label: "Inicio", href: "/" },
+      { label: "Propiedades" }
+    ]}
+  />
+
+  <section class="py-16 bg-muted/30">
+    <div class="mx-auto max-w-7xl px-4">
+      <!-- Stats section -->
+      <div class="mb-12 grid grid-cols-1 gap-8 sm:grid-cols-3 text-center">
+        <div class="rounded-lg bg-card p-6 shadow-sm border border-border">
+          <div class="text-3xl font-bold text-primary">{propiedades.length}</div>
+          <div class="text-sm text-muted-foreground mt-1">Propiedades disponibles</div>
+        </div>
+        <div class="rounded-lg bg-card p-6 shadow-sm border border-border">
+          <div class="text-3xl font-bold text-primary">{propiedades.filter(p => p.destacada).length}</div>
+          <div class="text-sm text-muted-foreground mt-1">Propiedades destacadas</div>
+        </div>
+        <div class="rounded-lg bg-card p-6 shadow-sm border border-border">
+          <div class="text-3xl font-bold text-primary">24h</div>
+          <div class="text-sm text-muted-foreground mt-1">Tiempo de respuesta</div>
+        </div>
+      </div>
+
+      <div id="resultados">
+        <ListadoPropiedades propiedades={propiedades} />
+      </div>
+    </div>
+  </section>
+</Layout>
+

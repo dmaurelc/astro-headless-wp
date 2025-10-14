@@ -1,0 +1,29 @@
+---
+import type { Propiedad } from "../../types/propiedad";
+import CardPropiedad from "./CardPropiedad.astro";
+
+interface Props {
+  propiedades: Propiedad[];
+}
+
+const { propiedades } = Astro.props;
+const propiedadesDestacadas = propiedades.filter((p) => p.destacada);
+---
+
+<section class="my-10 py-10">
+  <h2 class="text-3xl font-bold mb-6 text-center text-foreground">Propiedades Destacadas</h2>
+
+  {
+    propiedadesDestacadas.length === 0 ? (
+      <div class="text-center py-10 bg-card rounded-lg max-w-xl mx-auto border shadow-sm">
+        <p class="text-lg text-muted-foreground">No hay propiedades destacadas disponibles</p>
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {propiedadesDestacadas.map((propiedad) => (
+          <CardPropiedad propiedad={propiedad} />
+        ))}
+      </div>
+    )
+  }
+</section>

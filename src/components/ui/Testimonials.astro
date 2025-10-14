@@ -1,0 +1,171 @@
+---
+interface Testimonial {
+  name: string;
+  role: string;
+  company?: string;
+  avatar: string;
+  rating: number;
+  comment: string;
+  propertyType?: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  testimonials?: Testimonial[];
+}
+
+const {
+  title = "Lo que dicen nuestros clientes",
+  subtitle = "Testimonios reales de familias que encontraron su hogar ideal",
+  testimonials = [
+    {
+      name: "María González",
+      role: "Madre de familia",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
+      rating: 5,
+      comment: "Encontré mi casa ideal en solo 2 semanas. El equipo fue increíblemente profesional y me acompañaron en todo el proceso. Sin duda los recomendaría.",
+      propertyType: "Casa familiar"
+    },
+    {
+      name: "Carlos Ruiz",
+      role: "Inversionista",
+      company: "Grupo Inmobiliario CR",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
+      rating: 5,
+      comment: "Como inversionista, valoro mucho la transparencia y profesionalismo. Esta empresa superó mis expectativas en ambos aspectos. Excelente trabajo.",
+      propertyType: "Departamento de inversión"
+    },
+    {
+      name: "Ana Morales",
+      role: "Empresaria",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
+      rating: 5,
+      comment: "Vendí mi propiedad por encima del precio esperado. Su estrategia de marketing y negociación fueron claves. Muy agradecida por el resultado.",
+      propertyType: "Casa comercial"
+    },
+    {
+      name: "Luis Hernández",
+      role: "Profesional",
+      company: "Tech Solutions",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
+      rating: 5,
+      comment: "El proceso fue muy fluido y sin complicaciones. Me mantuvieron informado en todo momento y resolvieron todas mis dudas rápidamente.",
+      propertyType: "Departamento moderno"
+    },
+    {
+      name: "Patricia Silva",
+      role: "Doctora",
+      avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
+      rating: 5,
+      comment: "Después de buscar por meses con otras inmobiliarias, aquí encontraron exactamente lo que necesitaba en la primera semana. Increíble servicio.",
+      propertyType: "Oficina médica"
+    },
+    {
+      name: "Roberto Campos",
+      role: "Jubilado",
+      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400&q=80",
+      rating: 5,
+      comment: "Mi esposa y yo estamos encantados con nuestro nuevo hogar. El equipo entendió perfectamente lo que buscábamos para nuestra jubilación.",
+      propertyType: "Casa para jubilados"
+    }
+  ]
+} = Astro.props;
+
+// Función para generar estrellas
+const generateStars = (rating: number) => {
+  return Array.from({ length: 5 }, (_, i) => i < rating);
+};
+---
+
+<section class="py-16 sm:py-24 bg-muted/30">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mx-auto max-w-2xl text-center mb-16">
+      <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        {title}
+      </h2>
+      <p class="mt-4 text-lg leading-8 text-muted-foreground">
+        {subtitle}
+      </p>
+    </div>
+
+    <!-- Testimonials grid -->
+    <div class="mx-auto max-w-6xl">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {testimonials.map((testimonial) => (
+          <div class="group relative rounded-2xl bg-card p-6 border border-border hover:border-primary/50 transition-all duration-300 hover:scale-105">
+            <!-- Quote icon -->
+            <div class="absolute -top-3 left-6">
+              <div class="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+                <svg class="h-3 w-3 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Rating -->
+            <div class="flex items-center mb-4 pt-2">
+              {generateStars(testimonial.rating).map((filled) => (
+                <svg 
+                  class={`h-4 w-4 ${filled ? 'text-primary fill-current' : 'text-muted-foreground/30'}`} 
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+
+            <!-- Comment -->
+            <blockquote class="text-muted-foreground leading-relaxed mb-6">
+              "{testimonial.comment}"
+            </blockquote>
+
+            <!-- Author info -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <img 
+                  src={testimonial.avatar} 
+                  alt={testimonial.name}
+                  class="h-10 w-10 rounded-full object-cover ring-2 ring-primary/20"
+                  loading="lazy"
+                />
+                <div>
+                  <div class="text-sm font-medium text-foreground">{testimonial.name}</div>
+                  <div class="text-xs text-muted-foreground">
+                    {testimonial.role}
+                    {testimonial.company && ` • ${testimonial.company}`}
+                  </div>
+                </div>
+              </div>
+              
+              {testimonial.propertyType && (
+                <div class="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">
+                  {testimonial.propertyType}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Bottom stats -->
+    <div class="mt-16 flex flex-wrap items-center justify-center gap-8 text-center">
+      <div>
+        <div class="text-2xl font-bold text-primary">4.9/5</div>
+        <div class="text-sm text-muted-foreground">Calificación promedio</div>
+      </div>
+      <div class="w-px h-12 bg-border"></div>
+      <div>
+        <div class="text-2xl font-bold text-primary">500+</div>
+        <div class="text-sm text-muted-foreground">Clientes satisfechos</div>
+      </div>
+      <div class="w-px h-12 bg-border"></div>
+      <div>
+        <div class="text-2xl font-bold text-primary">98%</div>
+        <div class="text-sm text-muted-foreground">Recomendarían nuestro servicio</div>
+      </div>
+    </div>
+  </div>
+</section>

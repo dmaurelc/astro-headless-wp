@@ -1,0 +1,111 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  primaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+  stats?: Array<{
+    value: string;
+    label: string;
+  }>;
+}
+
+const {
+  title = "El futuro de los bienes raíces está aquí",
+  subtitle = "Descubre una nueva manera de comprar, vender y gestionar propiedades con nuestra plataforma innovadora y fácil de usar.",
+  primaryButtonText = "Explorar plataforma",
+  primaryButtonUrl = "/plataforma",
+  secondaryButtonText = "Solicitar información",
+  secondaryButtonUrl = "/contacto",
+  stats = [
+    { value: "10K+", label: "Propiedades activas" },
+    { value: "5K+", label: "Clientes satisfechos" },
+    { value: "98%", label: "Tasa de éxito" },
+    { value: "24/7", label: "Soporte disponible" }
+  ]
+} = Astro.props;
+---
+
+<section class="relative bg-background">
+  <!-- Enhanced Background Elements -->
+  <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+    <!-- Geometric shapes with more color -->
+    <div class="absolute -top-40 -right-32 h-80 w-80 rounded-full bg-gradient-to-br from-primary/20 to-accent/15 blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-32 h-80 w-80 rounded-full bg-gradient-to-tr from-secondary/15 to-primary/20 blur-3xl"></div>
+    
+    <!-- Additional accent shapes -->
+    <div class="absolute top-1/3 -left-20 h-40 w-40 rounded-full bg-gradient-to-r from-primary/10 to-transparent blur-2xl"></div>
+    <div class="absolute bottom-1/4 -right-20 h-60 w-60 rounded-full bg-gradient-to-l from-accent/10 to-transparent blur-2xl"></div>
+    
+    <!-- Grid pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,theme(colors.border/0.2)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.border/0.2)_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+    <div class="mx-auto max-w-4xl text-center">
+      
+      <!-- Main Content -->
+      <div class="space-y-8">
+        <!-- Title -->
+        <h1 class="text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+          <span class="block leading-tight">{title}</span>
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="mx-auto max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl lg:text-2xl">
+          {subtitle}
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col items-center justify-center gap-4 pt-4 sm:flex-row sm:gap-6">
+          <a 
+            href={primaryButtonUrl}
+            class="group inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-base font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            {primaryButtonText}
+            <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+          
+          <a 
+            href={secondaryButtonUrl}
+            class="group inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-8 py-4 text-base font-semibold text-card-foreground transition-all duration-300 hover:bg-card/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            {secondaryButtonText}
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <div class="mt-20 sm:mt-24">
+        <div class="mx-auto max-w-5xl">
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 gap-8 sm:grid-cols-4">
+            {stats.map((stat, index) => (
+              <div class="flex flex-col items-center space-y-2 group">
+                <dt class={`text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl transition-colors group-hover:scale-105 transform transition-transform duration-200 ${
+                  index === 0 ? 'text-primary' :
+                  index === 1 ? 'text-accent-foreground' :
+                  index === 2 ? 'text-secondary-foreground' :
+                  'text-foreground'
+                }`}>
+                  {stat.value}
+                </dt>
+                <dd class="text-sm font-medium text-muted-foreground sm:text-base">
+                  {stat.label}
+                </dd>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom gradient -->
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 via-border via-primary/30 to-transparent"></div>
+</section>

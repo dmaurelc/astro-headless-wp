@@ -1,0 +1,155 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  primaryButtonText: string;
+  primaryButtonUrl: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+  backgroundStyle?: "gradient" | "solid" | "pattern";
+}
+
+const { 
+  title, 
+  description, 
+  primaryButtonText, 
+  primaryButtonUrl,
+  secondaryButtonText,
+  secondaryButtonUrl,
+  backgroundStyle = "gradient"
+} = Astro.props;
+---
+
+<section class="cta-two relative py-16 md:py-20 overflow-hidden">
+  <!-- Background -->
+  <div class={`absolute inset-0 ${
+    backgroundStyle === "gradient" 
+      ? "bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10" 
+      : backgroundStyle === "pattern"
+      ? "bg-muted/50"
+      : "bg-card"
+  }`}></div>
+
+  <!-- Pattern overlay para backgroundStyle "pattern" -->
+  {backgroundStyle === "pattern" && (
+    <div class="absolute inset-0 opacity-20">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" style="width: 100%; height: 100%;">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="hsl(var(--primary))" stroke-width="1" opacity="0.15"/>
+            <path d="M 0 0 L 40 40" fill="none" stroke="hsl(var(--primary))" stroke-width="0.5" opacity="0.1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+      </svg>
+    </div>
+  )}
+
+  <!-- Decorative elements -->
+  <div class="absolute top-0 right-0 w-72 h-72 rounded-full bg-primary/5 blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-secondary/5 blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+
+  <!-- Content -->
+  <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+    <!-- Icon -->
+    <div class="mb-6 md:mb-8 flex justify-center">
+      <div class="relative">
+        <div class="flex h-14 w-14 md:h-16 md:w-16 items-center justify-center rounded-full bg-primary/10 backdrop-blur-sm border border-primary/20">
+          <svg class="h-8 w-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <!-- Pulse effect -->
+        <div class="absolute inset-0 rounded-full bg-primary/20 animate-ping"></div>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+      {title}
+    </h2>
+
+    <!-- Description -->
+    <p class="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+      {description}
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <!-- Primary Button -->
+      <a 
+        href={primaryButtonUrl}
+        class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-primary-foreground bg-primary rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1 min-w-[200px] overflow-hidden"
+      >
+        <span class="relative z-10 flex items-center gap-2">
+          {primaryButtonText}
+          <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </span>
+        
+        <!-- Shine effect -->
+        <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out opacity-0 group-hover:opacity-100"></div>
+      </a>
+
+      <!-- Secondary Button (optional) -->
+      {secondaryButtonText && secondaryButtonUrl && (
+        <a 
+          href={secondaryButtonUrl}
+          class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-foreground bg-transparent border-2 border-border hover:border-primary hover:text-primary rounded-lg transition-all duration-300 hover:-translate-y-1 min-w-[200px]"
+        >
+          <span class="flex items-center gap-2">
+            {secondaryButtonText}
+            <svg class="w-5 h-5 transform group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+          </span>
+        </a>
+      )}
+    </div>
+
+    <!-- Additional info -->
+    <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        <span>Respuesta inmediata</span>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        <span>Sin compromiso</span>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+        </svg>
+        <span>Asesoría profesional</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-two {
+    position: relative;
+  }
+  
+  .cta-two::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+      hsl(var(--primary) / 0.02) 0%, 
+      hsl(var(--secondary) / 0.01) 50%, 
+      hsl(var(--accent) / 0.02) 100%);
+    pointer-events: none;
+  }
+</style>

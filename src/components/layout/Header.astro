@@ -1,0 +1,142 @@
+---
+import ThemeToggle from "../ui/ThemeToggle.astro";
+import Navigation from "./Navigation.astro";
+---
+
+<header class="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 shadow-sm">
+  <div class="mx-auto max-w-7xl px-4 py-3">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <div class="logo flex-shrink-0">
+        <a href="/" class="no-underline" aria-label="Ir al inicio">
+          <svg xmlns="http://www.w3.org/2000/svg" width="140" height="32" fill="none" viewBox="0 0 176 40" class="w-auto h-8 md:h-10">
+            <path fill="var(--foreground)" fill-rule="evenodd" d="M15 28a5 5 0 0 1-5-5V0H0v23c0 8.284 6.716 15 15 15h11V28H15ZM45 10a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm-19 9C26 8.507 34.507 0 45 0s19 8.507 19 19-8.507 19-19 19-19-8.507-19-19ZM153 10a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Zm-19 9c0-10.493 8.507-19 19-19s19 8.507 19 19-8.507 19-19 19-19-8.507-19-19ZM85 0C74.507 0 66 8.507 66 19s8.507 19 19 19h28c1.969 0 3.868-.3 5.654-.856L124 40l5.768-10.804A19.007 19.007 0 0 0 132 20.261V19c0-10.493-8.507-19-19-19H85Zm37 19a9 9 0 0 0-9-9H85a9 9 0 1 0 0 18h28a9 9 0 0 0 9-8.93V19Z" clip-rule="evenodd"></path>
+            <path fill="#283841" d="M176 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-8">
+        <Navigation />
+      </div>
+
+      <!-- Desktop Actions -->
+      <div class="hidden lg:flex items-center gap-3">
+        <!-- WhatsApp CTA Button -->
+        <a 
+          href="https://wa.me/56956180823"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:scale-105 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-green-600"
+          aria-label="Contactar por WhatsApp"
+        >
+          <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+          </svg>
+          WhatsApp
+        </a>
+        
+        <ThemeToggle />
+      </div>
+
+      <!-- Mobile Actions -->
+      <div class="flex lg:hidden items-center gap-2">
+        <!-- Mobile WhatsApp -->
+        <a 
+          href="https://wa.me/56956180823"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-green-600 text-white shadow-sm transition-all duration-200 hover:bg-green-700 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-green-600"
+          aria-label="Contactar por WhatsApp"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+          </svg>
+        </a>
+        
+        <ThemeToggle />
+        
+        <!-- Hamburger Menu Button -->
+        <button 
+          id="mobile-menu-button"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-foreground hover:bg-muted transition-all duration-200 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+          aria-label="Abrir menú de navegación"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div 
+      id="mobile-menu"
+      class="lg:hidden mt-4 pb-4 border-t border-border hidden"
+      role="navigation"
+      aria-label="Menú principal móvil"
+    >
+      <div class="pt-4">
+        <Navigation />
+      </div>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        
+        // Toggle menu visibility
+        if (isExpanded) {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+          mobileMenuButton.setAttribute('aria-label', 'Abrir menú de navegación');
+        } else {
+          mobileMenu.classList.remove('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'true');
+          mobileMenuButton.setAttribute('aria-label', 'Cerrar menú de navegación');
+        }
+        
+        // Update icon
+        const icon = mobileMenuButton.querySelector('svg');
+        if (isExpanded) {
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+        } else {
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+        }
+      });
+      
+      // Close mobile menu when clicking on a navigation link
+      const navLinks = mobileMenu.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+          mobileMenuButton.setAttribute('aria-label', 'Abrir menú de navegación');
+          const icon = mobileMenuButton.querySelector('svg');
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+        });
+      });
+      
+      // Close mobile menu on window resize
+      window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) { // lg breakpoint
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+          mobileMenuButton.setAttribute('aria-label', 'Abrir menú de navegación');
+          const icon = mobileMenuButton.querySelector('svg');
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+        }
+      });
+    }
+  });
+</script>

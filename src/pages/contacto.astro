@@ -1,0 +1,310 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/ui/PageHeader.astro";
+---
+
+<Layout title="Contacto | Propiedades Inmobiliarias">
+  <PageHeader 
+    title="Contáctanos"
+    subtitle="Estamos aquí para ayudarte"
+    description="Nuestro equipo de expertos está listo para responder todas tus preguntas sobre propiedades e inversiones inmobiliarias"
+    backgroundImage="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+    breadcrumb={[
+      { label: "Inicio", href: "/" },
+      { label: "Contacto" }
+    ]}
+  />
+  
+  <section class="py-16 bg-muted/30">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- Información de contacto -->
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
+            <div class="px-6">
+              <h2 class="text-2xl font-bold text-foreground mb-6">
+                Información de Contacto
+              </h2>
+              
+              <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                  <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-medium text-foreground">Dirección</h3>
+                    <p class="text-muted-foreground">Calle Principal 123, Santiago, Chile</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-medium text-foreground">Teléfono</h3>
+                    <p class="text-muted-foreground">+56 9 5618 0823</p>
+                    <a href="https://wa.me/56956180823" target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:text-primary/80 transition-colors">
+                      WhatsApp: +56 9 5618 0823
+                    </a>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-medium text-foreground">Email</h3>
+                    <p class="text-muted-foreground">info@propiedades.com</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                  <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-medium text-foreground">Horarios</h3>
+                    <p class="text-muted-foreground">Lunes a Viernes: 9:00 - 18:00</p>
+                    <p class="text-muted-foreground">Sábados: 9:00 - 14:00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulario de contacto -->
+          <div class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
+            <div class="px-6">
+              <h2 class="text-2xl font-bold text-foreground mb-6">
+                Envíanos un Mensaje
+              </h2>
+              
+              <form id="contactForm" class="space-y-6">
+                <div>
+                  <label for="nombre" class="flex items-center gap-2 text-sm leading-none font-medium select-none mb-2">
+                    Nombre completo *
+                  </label>
+                  <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                    class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                    placeholder="Tu nombre completo"
+                  />
+                  <span class="error-message text-destructive text-sm hidden"></span>
+                </div>
+
+                <div>
+                  <label for="email" class="flex items-center gap-2 text-sm leading-none font-medium select-none mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                    placeholder="tu@email.com"
+                  />
+                  <span class="error-message text-destructive text-sm hidden"></span>
+                </div>
+
+                <div>
+                  <label for="telefono" class="flex items-center gap-2 text-sm leading-none font-medium select-none mb-2">
+                    Teléfono
+                  </label>
+                  <input
+                    type="tel"
+                    id="telefono"
+                    name="telefono"
+                    class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                    placeholder="+56 9 1234 5678"
+                  />
+                </div>
+
+                <div>
+                  <label for="asunto" class="flex items-center gap-2 text-sm leading-none font-medium select-none mb-2">
+                    Asunto *
+                  </label>
+                  <select
+                    id="asunto"
+                    name="asunto"
+                    required
+                    class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+                  >
+                    <option value="">Selecciona un asunto</option>
+                    <option value="compra">Compra de propiedad</option>
+                    <option value="venta">Venta de propiedad</option>
+                    <option value="arriendo">Arriendo</option>
+                    <option value="tasacion">Tasación</option>
+                    <option value="consulta">Consulta general</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                  <span class="error-message text-destructive text-sm hidden"></span>
+                </div>
+
+                <div>
+                  <label for="mensaje" class="flex items-center gap-2 text-sm leading-none font-medium select-none mb-2">
+                    Mensaje *
+                  </label>
+                  <textarea
+                    id="mensaje"
+                    name="mensaje"
+                    rows="5"
+                    required
+                    class="border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm resize-vertical"
+                    placeholder="Cuéntanos cómo podemos ayudarte..."
+                  ></textarea>
+                  <span class="error-message text-destructive text-sm hidden"></span>
+                </div>
+
+                <div class="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="acepto"
+                    name="acepto"
+                    required
+                    class="h-4 w-4 text-primary focus:ring-primary border-input rounded"
+                  />
+                  <label for="acepto" class="ml-2 block text-sm text-muted-foreground">
+                    Acepto los términos y condiciones y la política de privacidad *
+                  </label>
+                </div>
+
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
+                >
+                  Enviar Mensaje
+                </button>
+              </form>
+
+              <!-- Mensaje de éxito -->
+              <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span>¡Mensaje enviado correctamente! Te contactaremos pronto.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mapa de ubicación -->
+        <!-- <div class="mt-16">
+          <div class="bg-card rounded-xl border shadow-sm overflow-hidden">
+            <div class="p-6">
+              <h2 class="text-2xl font-bold text-foreground mb-4">Nuestra Ubicación</h2>
+              <p class="text-muted-foreground mb-6">Visítanos en nuestra oficina en el centro de Santiago</p>
+            </div>
+            <div class="h-96 bg-muted flex items-center justify-center">
+              <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                  <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <p class="text-muted-foreground">Mapa interactivo próximamente</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Validación y manejo del formulario
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const mensajeResultado = document.getElementById('mensaje-resultado');
+    const mensajeExito = document.getElementById('mensaje-exito');
+    const mensajeError = document.getElementById('mensaje-error');
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validación básica
+        const nombre = document.getElementById('nombre').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const asunto = document.getElementById('asunto').value;
+        const mensaje = document.getElementById('mensaje').value.trim();
+        const privacidad = document.getElementById('privacidad').checked;
+
+        // Resetear mensajes
+        mensajeResultado.classList.add('hidden');
+        mensajeExito.classList.add('hidden');
+        mensajeError.classList.add('hidden');
+
+        // Validaciones
+        if (!nombre || !email || !asunto || !mensaje || !privacidad) {
+          mostrarError('Por favor, completa todos los campos obligatorios.');
+          return;
+        }
+
+        if (!validarEmail(email)) {
+          mostrarError('Por favor, ingresa un email válido.');
+          return;
+        }
+
+        // Simular envío del formulario
+        mostrarCargando();
+        
+        setTimeout(() => {
+          // Aquí iría la lógica real de envío
+          mostrarExito();
+          form.reset();
+        }, 1500);
+      });
+    }
+
+    function validarEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    function mostrarExito() {
+      mensajeResultado.classList.remove('hidden');
+      mensajeExito.classList.remove('hidden');
+      mensajeError.classList.add('hidden');
+    }
+
+    function mostrarError(mensaje) {
+      mensajeResultado.classList.remove('hidden');
+      mensajeError.classList.remove('hidden');
+      mensajeError.textContent = mensaje;
+      mensajeExito.classList.add('hidden');
+    }
+
+    function mostrarCargando() {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const textoOriginal = submitBtn.textContent;
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        submitBtn.textContent = textoOriginal;
+        submitBtn.disabled = false;
+      }, 1500);
+    }
+  });
+</script>

@@ -1,0 +1,126 @@
+---
+interface Props {
+  dormitorios: number;
+  banos: number;
+  estacionamientos: number;
+}
+
+const { dormitorios, banos, estacionamientos } = Astro.props;
+
+const features = [
+  {
+    icon: "bed",
+    value: dormitorios,
+    label: dormitorios === 1 ? "Dormitorio" : "Dormitorios",
+    description: "Habitaciones disponibles",
+    color: "text-blue-500"
+  },
+  {
+    icon: "bath",
+    value: banos,
+    label: banos === 1 ? "Baño" : "Baños",
+    description: "Sanitarios completos",
+    color: "text-cyan-500"
+  },
+  {
+    icon: "car",
+    value: estacionamientos,
+    label: estacionamientos === 1 ? "Estacionamiento" : "Estacionamientos",
+    description: "Espacios para vehículos",
+    color: "text-green-500"
+  }
+];
+---
+
+<div class="property-features">
+  <h2 class="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+    </svg>
+    Características principales
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {features.map((feature) => (
+      <div class="feature-card group relative overflow-hidden bg-card border border-border rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30">
+        <!-- Icono -->
+        <div class="flex items-center justify-center w-14 h-14 bg-primary/5 border-2 border-primary/10 rounded-xl mb-4 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-300">
+          {feature.icon === "bed" && (
+            <svg class={`w-7 h-7 ${feature.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21h18M4 18h16s0-2 0-6c0-5-4-5-8-5s-8 0-8 5c0 4 0 6 0 6z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12c0-1.1.9-2 2-2s2 .9 2 2 .9 2 2 2 2-.9 2-2"></path>
+            </svg>
+          )}
+          {feature.icon === "bath" && (
+            <svg class={`w-7 h-7 ${feature.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12H9l-2 9h14l-1-9zM11 12V7a4 4 0 118 0v5M7.5 6.5v1M8.5 4.5v1M6.5 4.5v1"></path>
+            </svg>
+          )}
+          {feature.icon === "car" && (
+            <svg class={`w-7 h-7 ${feature.color}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9l-1.9-1.7c-.3-.4-.7-.4-1.1-.4H5.5c-.4 0-.8.2-1.1.4L2.5 11C1.7 11.3 1 12.1 1 13v3c0 .6.4 1 1 1h2m0 0a2 2 0 104 0m12 0a2 2 0 104 0M7 13h10"></path>
+            </svg>
+          )}
+        </div>
+
+        <!-- Valor principal -->
+        <div class="mb-2">
+          <span class="text-3xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+            {feature.value}
+          </span>
+        </div>
+
+        <!-- Etiqueta -->
+        <div class="mb-1">
+          <span class="text-lg font-semibold text-foreground">
+            {feature.label}
+          </span>
+        </div>
+
+        <!-- Descripción -->
+        <p class="text-sm text-muted-foreground">
+          {feature.description}
+        </p>
+
+        <!-- Efecto hover decorativo -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Información adicional -->
+  <div class="mt-8 p-6 bg-muted/50 rounded-xl border border-border">
+    <div class="flex items-start gap-3">
+      <div class="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center mt-0.5">
+        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-semibold text-foreground mb-1">Información importante</h3>
+        <p class="text-sm text-muted-foreground leading-relaxed">
+          Las características mostradas corresponden a la información proporcionada por el propietario. 
+          Te recomendamos verificar estos datos durante la visita a la propiedad.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .feature-card:hover::before {
+    opacity: 1;
+  }
+</style>

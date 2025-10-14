@@ -1,0 +1,76 @@
+---
+import type { Propiedad } from "../../types/propiedad";
+import { formatearPrecio } from "../../services/propiedades";
+
+interface Props {
+  propiedad: Propiedad;
+}
+
+const { propiedad } = Astro.props;
+const {
+  title,
+  precio,
+  direccion,
+  dormitorios,
+  banos,
+  estacionamientos,
+  galeria,
+  tipo,
+  operacion,
+} = propiedad;
+const imagenPrincipal = galeria.length > 0 ? galeria[0].sizes.medium_large : "";
+---
+
+<article
+  class="bg-card text-card-foreground flex flex-col gap-2 rounded-xl border p-1.5 shadow-sm hover:-translate-y-1 transition-transform duration-300 h-full clickable-card relative border-border"
+>
+  <div class="relative aspect-video overflow-hidden rounded-lg">
+    <img
+      src={imagenPrincipal}
+      alt={title}
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-lg"
+    />
+    <div
+      class="absolute top-0 p-2 w-full flex justify-between gap-1.5 flex-wrap"
+    >
+      {
+        tipo.map((t) => (
+          <span class="bg-primary text-primary-foreground py-1 px-2 text-xs font-medium uppercase rounded-md transition-all duration-300 hover:bg-primary/90">
+            {t}
+          </span>
+        ))
+      }
+      {
+        operacion.map((o) => (
+          <span class="bg-secondary text-secondary-foreground py-1 px-2 text-xs font-medium uppercase rounded-md transition-all duration-300 hover:bg-secondary/80">
+            {o}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+  <div class="p-2 flex flex-col flex-grow">
+    <a href={`/propiedad/${propiedad.slug}`} class="no-underline">
+      <h3 class="text-lg font-semibold text-foreground hover:text-primary transition-colors">{title}</h3>
+    </a>
+    <p class="m-0 mb-2 text-sm text-muted-foreground line-clamp-2">{direccion}</p>
+    <p class="m-0 mb-4 text-xl font-bold text-primary">
+      {formatearPrecio(precio)}
+    </p>
+    <div class="flex gap-4 mt-auto">
+      <div class="flex items-center gap-1 text-sm text-muted-foreground">
+        <span class="text-base">🛏️</span>
+        <span>{dormitorios} Dorm.</span>
+      </div>
+      <div class="flex items-center gap-1 text-sm text-muted-foreground">
+        <span class="text-base">🚿</span>
+        <span>{banos} Baños</span>
+      </div>
+      <div class="flex items-center gap-1 text-sm text-muted-foreground">
+        <span class="text-base">🚗</span>
+        <span>{estacionamientos} Est.</span>
+      </div>
+    </div>
+  </div>
+</article>
