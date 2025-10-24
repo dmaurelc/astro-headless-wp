@@ -234,29 +234,24 @@ import PageHeader from "../components/ui/PageHeader.astro";
 <script>
   // Validación y manejo del formulario
   document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contactForm');
-    const mensajeResultado = document.getElementById('mensaje-resultado');
-    const mensajeExito = document.getElementById('mensaje-exito');
-    const mensajeError = document.getElementById('mensaje-error');
+    const form = document.getElementById('contactForm') as HTMLFormElement;
+    const successMessage = document.getElementById('successMessage');
+    const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
     if (form) {
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        // Validación básica
-        const nombre = document.getElementById('nombre').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const asunto = document.getElementById('asunto').value;
-        const mensaje = document.getElementById('mensaje').value.trim();
-        const privacidad = document.getElementById('privacidad').checked;
 
-        // Resetear mensajes
-        mensajeResultado.classList.add('hidden');
-        mensajeExito.classList.add('hidden');
-        mensajeError.classList.add('hidden');
+        // Validación básica
+        const nombre = (document.getElementById('nombre') as HTMLInputElement).value.trim();
+        const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+        const telefono = (document.getElementById('telefono') as HTMLInputElement).value.trim();
+        const asunto = (document.getElementById('asunto') as HTMLSelectElement).value;
+        const mensaje = (document.getElementById('mensaje') as HTMLTextAreaElement).value.trim();
+        const acepto = (document.getElementById('acepto') as HTMLInputElement).checked;
 
         // Validaciones
-        if (!nombre || !email || !asunto || !mensaje || !privacidad) {
+        if (!nombre || !email || !asunto || !mensaje || !acepto) {
           mostrarError('Por favor, completa todos los campos obligatorios.');
           return;
         }
@@ -266,45 +261,116 @@ import PageHeader from "../components/ui/PageHeader.astro";
           return;
         }
 
-        // Simular envío del formulario
-        mostrarCargando();
-        
-        setTimeout(() => {
-          // Aquí iría la lógica real de envío
-          mostrarExito();
-          form.reset();
-        }, 1500);
+        // Mostrar estado de carga
+        mostrarCargando(true);
+
+        try {
+          // Enviar datos al endpoint API
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              nombre,
+              email,
+              telefono,
+              asunto,
+              mensaje,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            mostrarExito(result.message);
+            form.reset();
+          } else {
+            mostrarError(result.message || 'Hubo un error al enviar el mensaje.');
+          }
+        } catch (error) {
+          console.error('Error al enviar el formulario:', error);
+          mostrarError('Error de conexión. Por favor, verifica tu conexión a internet e intenta de nuevo.');
+        } finally {
+          mostrarCargando(false);
+        }
       });
     }
 
-    function validarEmail(email) {
+    function validarEmail(email: string): boolean {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return regex.test(email);
     }
 
-    function mostrarExito() {
-      mensajeResultado.classList.remove('hidden');
-      mensajeExito.classList.remove('hidden');
-      mensajeError.classList.add('hidden');
+    function mostrarExito(mensaje: string) {
+      if (successMessage) {
+        const messageText = successMessage.querySelector('span');
+        if (messageText) {
+          messageText.textContent = mensaje;
+        }
+        successMessage.classList.remove('hidden');
+
+        // Hacer scroll hasta el mensaje de éxito
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Ocultar el mensaje después de 10 segundos
+        setTimeout(() => {
+          successMessage.classList.add('hidden');
+        }, 10000);
+      }
     }
 
-    function mostrarError(mensaje) {
-      mensajeResultado.classList.remove('hidden');
-      mensajeError.classList.remove('hidden');
-      mensajeError.textContent = mensaje;
-      mensajeExito.classList.add('hidden');
-    }
+    function mostrarError(mensaje: string) {
+      // Crear un elemento de error temporal si no existe
+      let errorDiv = document.getElementById('errorMessage');
 
-    function mostrarCargando() {
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const textoOriginal = submitBtn.textContent;
-      submitBtn.textContent = 'Enviando...';
-      submitBtn.disabled = true;
-      
+      if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.id = 'errorMessage';
+        errorDiv.className = 'mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg';
+        errorDiv.innerHTML = `
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+            <span></span>
+          </div>
+        `;
+        form.parentElement?.appendChild(errorDiv);
+      }
+
+      const messageText = errorDiv.querySelector('span');
+      if (messageText) {
+        messageText.textContent = mensaje;
+      }
+
+      errorDiv.classList.remove('hidden');
+
+      // Hacer scroll hasta el mensaje de error
+      errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Ocultar el mensaje después de 7 segundos
       setTimeout(() => {
-        submitBtn.textContent = textoOriginal;
-        submitBtn.disabled = false;
-      }, 1500);
+        errorDiv?.classList.add('hidden');
+      }, 7000);
+    }
+
+    function mostrarCargando(isLoading: boolean) {
+      if (submitBtn) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Enviando...
+          `;
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar Mensaje';
+        }
+      }
     }
   });
 </script>
