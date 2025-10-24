@@ -3,12 +3,22 @@ import { Resend } from 'resend';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    // Log environment variables (masked for security)
+    console.log('Environment check:', {
+      hasApiKey: !!import.meta.env.RESEND_API_KEY,
+      apiKeyPrefix: import.meta.env.RESEND_API_KEY?.substring(0, 8) + '...',
+      emailFrom: import.meta.env.EMAIL_FROM,
+      emailTo: import.meta.env.EMAIL_TO,
+    });
+
     // Initialize Resend client at runtime (not at build time)
     const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
     // Parse form data
     const body = await request.json();
     const { nombre, email, telefono, asunto, mensaje } = body;
+
+    console.log('Form data received:', { nombre, email, asunto });
 
     // Validate required fields
     if (!nombre || !email || !asunto || !mensaje) {
@@ -56,6 +66,7 @@ export const POST: APIRoute = async ({ request }) => {
     const asuntoTexto = asuntoMap[asunto] || asunto;
 
     // Send email using Resend
+    console.log('Attempting to send email via Resend...');
     const { data, error } = await resend.emails.send({
       from: import.meta.env.EMAIL_FROM || 'noreply@yourdomain.com',
       to: import.meta.env.EMAIL_TO || 'info@propiedades.com',
@@ -117,12 +128,16 @@ Este mensaje fue enviado desde el formulario de contacto de tu sitio web.
       `.trim(),
     });
 
+    console.log('Resend response:', { data, error, hasData: !!data, hasError: !!error });
+
     if (error) {
-      console.error('Error sending email:', error);
+      console.error('Error sending email with Resend:', JSON.stringify(error, null, 2));
       return new Response(
         JSON.stringify({
           success: false,
           message: 'Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.',
+          error: error?.message || 'Error desconocido',
+          details: error,
         }),
         {
           status: 500,
