@@ -1,6 +1,7 @@
 ---
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
+import WhatsAppFloatingButton from "../components/ui/WhatsAppFloatingButton.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -64,5 +65,7 @@ const { title = "Propiedades Inmobiliarias" } = Astro.props;
 			<slot />
 		</main>
 		<Footer />
+		<!-- Floating WhatsApp Button (mobile only) -->
+		<WhatsAppFloatingButton />
 	</body>
 </html>

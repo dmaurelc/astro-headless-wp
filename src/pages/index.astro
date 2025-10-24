@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/ui/Hero.astro";
+import HeroTwo from "../components/ui/HeroTwo.astro";
+import HeroThree from "../components/ui/HeroThree.astro";
 import HeroFour from "../components/ui/HeroFour.astro";
+import HeroFive from "../components/ui/HeroFive.astro";
 import StatsSection from "../components/ui/StatsSection.astro";
 import PropiedadesDestacadas from "../components/propiedades/PropiedadesDestacadas.astro";
 import WhyChooseUs from "../components/ui/WhyChooseUs.astro";
@@ -15,8 +19,12 @@ const propiedades = await obtenerPropiedades();
 
 <Layout title="Propiedades Inmobiliarias | Encuentra tu hogar ideal">
 	<!-- Hero Principal -->
+	<!-- <Hero /> -->
+	<!-- <HeroTwo /> -->
+	<!-- <HeroThree /> -->
 	<HeroFour />
-	
+	<!-- <HeroFive /> -->
+
 	<!-- Propiedades Destacadas -->
 	<section class="py-16 bg-background">
 		<div class="mx-auto max-w-7xl px-4">
