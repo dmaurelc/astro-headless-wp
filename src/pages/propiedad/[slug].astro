@@ -5,23 +5,18 @@ import PropertyDetails from "../../components/propiedades/PropertyDetails.astro"
 import PropertyFeatures from "../../components/propiedades/PropertyFeatures.astro";
 import PropertyMap from "../../components/propiedades/PropertyMap.astro";
 import CtaTwo from "../../components/ui/CtaTwo.astro";
-import { obtenerPropiedades } from "../../services/propiedades";
-import type { Propiedad } from "../../types/propiedad";
+import { obtenerPropiedadPorSlug } from "../../services/propiedades";
 
-export async function getStaticPaths() {
-  const propiedades = await obtenerPropiedades();
+// En modo SSR, obtenemos el slug de los parámetros de la URL
+const { slug } = Astro.params;
 
-  return propiedades.map((propiedad) => ({
-    params: { slug: propiedad.slug },
-    props: { propiedad },
-  }));
+// Obtenemos la propiedad por su slug
+const propiedad = slug ? await obtenerPropiedadPorSlug(slug) : null;
+
+// Si no se encuentra la propiedad, retornamos 404
+if (!propiedad) {
+  return Astro.redirect('/404');
 }
-
-interface Props {
-  propiedad: Propiedad;
-}
-
-const { propiedad } = Astro.props;
 ---
 
 <Layout title={`${propiedad.title} | Propiedades Inmobiliarias`}>

@@ -1,0 +1,99 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Página no encontrada | 404">
+  <div class="min-h-screen bg-background flex items-center justify-center px-4 py-16">
+    <div class="max-w-2xl mx-auto text-center">
+      <!-- Icono ilustrativo -->
+      <div class="mb-8 flex justify-center">
+        <div class="relative">
+          <!-- Número 404 con efecto -->
+          <div class="text-[120px] sm:text-[180px] font-bold leading-none">
+            <span class="bg-gradient-to-br from-primary to-primary/50 bg-clip-text text-transparent">
+              404
+            </span>
+          </div>
+
+          <!-- Icono de casa -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <svg
+              class="w-16 h-16 sm:w-20 sm:h-20 text-muted-foreground/30"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensajes -->
+      <div class="mb-8 space-y-4">
+        <h1 class="text-3xl sm:text-4xl font-bold text-foreground">
+          Página no encontrada
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-md mx-auto">
+          Lo sentimos, la propiedad o página que buscas no existe o ha sido movida.
+        </p>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:shadow-primary/20"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          Volver al inicio
+        </a>
+
+        <a
+          href="/propiedades"
+          class="inline-flex items-center justify-center gap-2 bg-transparent border-2 border-border hover:border-primary hover:bg-primary/5 text-foreground hover:text-primary px-6 py-3 rounded-lg font-medium transition-all duration-200"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          Ver propiedades
+        </a>
+      </div>
+
+      <!-- Enlaces adicionales -->
+      <div class="mt-12 pt-8 border-t border-border">
+        <p class="text-sm text-muted-foreground mb-4">
+          ¿Necesitas ayuda? Contáctanos
+        </p>
+        <div class="flex flex-wrap justify-center gap-6 text-sm">
+          <a
+            href="/contacto"
+            class="text-primary hover:text-primary/80 transition-colors duration-200 inline-flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            Formulario de contacto
+          </a>
+          <a
+            href="/empresa"
+            class="text-primary hover:text-primary/80 transition-colors duration-200 inline-flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Sobre nosotros
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
