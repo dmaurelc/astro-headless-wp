@@ -18,41 +18,40 @@ const propiedades = await obtenerPropiedades();
 ---
 
 <Layout title="Propiedades Inmobiliarias | Encuentra tu hogar ideal">
-	<!-- Hero Principal -->
-	<!-- <Hero /> -->
-	<!-- <HeroTwo /> -->
-	<!-- <HeroThree /> -->
-	<HeroFour />
-	<!-- <HeroFive /> -->
+  <!-- Hero Principal -->
+  <Hero />
+  <HeroTwo />
+  <HeroThree />
+  <HeroFour />
+  <HeroFive />
 
-	<!-- Propiedades Destacadas -->
-	<section class="py-16 bg-background">
-		<div class="mx-auto max-w-7xl px-4">
-			<PropiedadesDestacadas propiedades={propiedades} />
-		</div>
-	</section>
+  <!-- Propiedades Destacadas -->
+  <section class="py-16 bg-background">
+    <div class="mx-auto max-w-7xl px-4">
+      <PropiedadesDestacadas propiedades={propiedades} />
+    </div>
+  </section>
 
-	<!-- Estadísticas -->
-	<StatsSection />
+  <!-- Estadísticas -->
+  <StatsSection />
 
+  <!-- ¿Por qué elegirnos? -->
+  <WhyChooseUs />
 
-	<!-- ¿Por qué elegirnos? -->
-	<WhyChooseUs />
+  <!-- Proceso de trabajo -->
+  <ProcessSteps />
 
-	<!-- Proceso de trabajo -->
-	<ProcessSteps />
+  <!-- Testimonios -->
+  <Testimonials />
 
-	<!-- Testimonios -->
-	<Testimonials />
-
-	<!-- Call to Action final -->
-	<CtaOne 
-		title="¿Listo para encontrar tu propiedad ideal?"
-		subtitle="Miles de familias ya confiaron en nosotros"
-		description="Nuestro equipo de expertos te está esperando para ayudarte a dar el siguiente paso hacia el hogar de tus sueños."
-		primaryButtonText="Ver todas las propiedades"
-		primaryButtonUrl="/propiedades"
-		secondaryButtonText="Contactar ahora"
-		secondaryButtonUrl="/contacto"
-	/>
+  <!-- Call to Action final -->
+  <CtaOne
+    title="¿Listo para encontrar tu propiedad ideal?"
+    subtitle="Miles de familias ya confiaron en nosotros"
+    description="Nuestro equipo de expertos te está esperando para ayudarte a dar el siguiente paso hacia el hogar de tus sueños."
+    primaryButtonText="Ver todas las propiedades"
+    primaryButtonUrl="/propiedades"
+    secondaryButtonText="Contactar ahora"
+    secondaryButtonUrl="/contacto"
+  />
 </Layout>
